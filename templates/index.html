@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Work & World Through Time</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>🌍 Work & World Through Time</h1>
+  <div class="timeline">
+    {% for t in timeline %}
+      <div class="card">
+        <h2>{{ t.year }}</h2>
+        <p>{{ t.story }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
