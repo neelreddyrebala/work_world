@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Work & World Interactive</title>
+  <meta charset="utf-8" />
+  <title>Work & World — 25 Stories</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
 </head>
 <body>
-  <h1>🌍 Work & World Interactive</h1>
+  <h1>🌍 Work & World — Pick a Century & Job</h1>
   <form method="post">
-    <label for="year">Enter a year (1700, 1800, 2000, 2025):</label><br>
-    <input type="text" id="year" name="year" required><br><br>
-
-    <label for="job">Enter a job (e.g., farmer, factory, software, ai):</label><br>
-    <input type="text" id="job" name="job" required><br><br>
-
-    <button type="submit">Get Story</button>
+    <label>Century:</label>
+    <select name="century" required>
+      {% for c in CENTURIES %}
+        <option value="{{ c }}">{{ c }}s</option>
+      {% endfor %}
+    </select>
+    &nbsp;&nbsp;
+    <label>Job:</label>
+    <select name="job" required>
+      <option value="farmer">Farmer</option>
+      <option value="factory">Factory worker</option>
+      <option value="teacher">Teacher</option>
+      <option value="software">Software engineer</option>
+      <option value="ai_pm">AI product manager</option>
+    </select>
+    &nbsp;&nbsp;
+    <button type="submit">Tell me a story</button>
   </form>
 </body>
 </html>
