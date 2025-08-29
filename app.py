@@ -10,7 +10,7 @@ stories = {
         "farmer":  "1700 • Farmer: Your calendar is the sky. You trade hay for gossip and survival tips. Tools: hand plow, strong back, suspiciously optimistic neighbor. Pro tip: rotate crops, not excuses.",
         "factory": "1700 • Factory Worker: Factories aren’t quite the thing yet. You’re ‘pre-factory,’ which is a polite way to say ‘apprentice with sore wrists.’ Learn a craft and avoid sawdust in your tea.",
         "teacher": "1700 • Teacher: You herd tiny philosophers who ask ‘Why?’ 19 times per minute. Blackboard? Chalk? Luxury. You teach letters, numbers, and ‘please stop poking the goat.’",
-        "software": "1700 • Software Engineer: You refactor… parchment. Your backlog is ‘invent electricity, then computers.’ Until then, you optimize loops in your head and brag about O(oxen).",
+        "software":"1700 • Software Engineer: You refactor… parchment. Your backlog is ‘invent electricity, then computers.’ Until then, you optimize loops in your head and brag about O(oxen).",
         "ai_pm":   "1700 • AI PM: You pitch ‘automated thinking machines.’ Audience nods, then asks if it can also churn butter. Visionary, but maybe ship a better wheel first."
     },
     "1800": {
@@ -48,16 +48,29 @@ def safe_lower(x: str) -> str:
 
 @app.route("/", methods=["GET", "POST"])
 def home():
+    story = None
+    selected_century = None
+    selected_job = None
+    job_display = ""
+
     if request.method == "POST":
-        century = request.form.get("century")
-        job = safe_lower(request.form.get("job"))
-        story = stories.get(century, {}).get(job)
+        selected_century = (request.form.get("century") or "").strip()
+        selected_job = safe_lower(request.form.get("job"))
+        job_display = selected_job.replace("_", " ").title() if selected_job else ""
+        # Safe lookup
+        story = stories.get(selected_century, {}).get(selected_job)
         if not story:
             story = "No story for that combo (yet). Try another!"
-        job_display = job.replace('_', ' ').title()
-        return render_template("result.html", century=century, job_display=job_display, story=story)
-    # GET
-    return render_template("index.html", JOBS=JOBS, CENTURIES=CENTURIES)
+
+    return render_template(
+        "index.html",
+        JOBS=JOBS,
+        CENTURIES=CENTURIES,
+        story=story,
+        selected_century=selected_century,
+        selected_job=selected_job,
+        job_display=job_display,
+    )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

@@ -4,29 +4,42 @@
   <meta charset="utf-8" />
   <title>Work & World — 25 Stories</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; padding: 24px; }
+    .wrap { max-width: 820px; margin: 0 auto; }
+    .story { margin-top: 20px; line-height: 1.6; background:#f7f7fb; padding:16px; border-radius:12px; }
+    form { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    select, button { padding: 8px 10px; font-size: 16px; }
+  </style>
 </head>
 <body>
-  <h1>🌍 Work & World — Pick a Century & Job</h1>
+  <div class="wrap">
+    <h1>🌍 Work & World — Pick a Century & Job</h1>
 
-  <form method="post">
-    <label>Century:</label>
-    <select name="century" required>
-      {% for c in CENTURIES %}
-        <option value="{{ c }}">{{ c }}s</option>
-      {% endfor %}
-    </select>
+    <form method="post">
+      <label>Century:</label>
+      <select name="century" required>
+        {% for c in CENTURIES %}
+          <option value="{{ c }}" {% if selected_century == c %}selected{% endif %}>{{ c }}s</option>
+        {% endfor %}
+      </select>
 
-    &nbsp;&nbsp;
+      <label>Job:</label>
+      <select name="job" required>
+        {% for j in JOBS %}
+          <option value="{{ j }}" {% if selected_job == j %}selected{% endif %}>{{ j.replace('_',' ').title() }}</option>
+        {% endfor %}
+      </select>
 
-    <label>Job:</label>
-    <select name="job" required>
-      {% for j in JOBS %}
-        <option value="{{ j }}">{{ j|replace('_',' ')|title }}</option>
-      {% endfor %}
-    </select>
+      <button type="submit">Tell me a story</button>
+    </form>
 
-    &nbsp;&nbsp;
-    <button type="submit">Tell me a story</button>
-  </form>
+    {% if story %}
+      <div class="story">
+        <h2>Story for {{ job_display }} in the {{ selected_century }}s</h2>
+        <p>{{ story }}</p>
+      </div>
+    {% endif %}
+  </div>
 </body>
 </html>
