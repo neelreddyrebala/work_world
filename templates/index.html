@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Work & World Through Time</title>
-  <link rel="stylesheet" href="/static/style.css">
+  <title>Work & World Interactive</title>
 </head>
 <body>
-  <h1>🌍 Work & World Through Time</h1>
-  <div class="timeline">
-    {% for t in timeline %}
-      <div class="card">
-        <h2>{{ t.year }}</h2>
-        <p>{{ t.story }}</p>
-      </div>
-    {% endfor %}
-  </div>
+  <h1>🌍 Work & World Interactive</h1>
+  <form method="post">
+    <label for="year">Enter a year (1700, 1800, 2000, 2025):</label><br>
+    <input type="text" id="year" name="year" required><br><br>
+
+    <label for="job">Enter a job (e.g., farmer, factory, software, ai):</label><br>
+    <input type="text" id="job" name="job" required><br><br>
+
+    <button type="submit">Get Story</button>
+  </form>
 </body>
 </html>
