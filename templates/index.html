@@ -7,6 +7,7 @@
 </head>
 <body>
   <h1>🌍 Work & World — Pick a Century & Job</h1>
+
   <form method="post">
     <label>Century:</label>
     <select name="century" required>
@@ -14,15 +15,16 @@
         <option value="{{ c }}">{{ c }}s</option>
       {% endfor %}
     </select>
+
     &nbsp;&nbsp;
+
     <label>Job:</label>
     <select name="job" required>
-      <option value="farmer">Farmer</option>
-      <option value="factory">Factory worker</option>
-      <option value="teacher">Teacher</option>
-      <option value="software">Software engineer</option>
-      <option value="ai_pm">AI product manager</option>
+      {% for j in JOBS %}
+        <option value="{{ j }}">{{ j|replace('_',' ')|title }}</option>
+      {% endfor %}
     </select>
+
     &nbsp;&nbsp;
     <button type="submit">Tell me a story</button>
   </form>
